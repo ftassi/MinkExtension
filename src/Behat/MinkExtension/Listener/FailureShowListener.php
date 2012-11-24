@@ -86,8 +86,11 @@ class FailureShowListener implements EventSubscriberInterface
             throw new \RuntimeException('Set "show_cmd" parameter in behat.yml to be able to open page in browser (ex.: "show_cmd: open %s")');
         }
 
-        $filename = rtrim($this->parameters['show_tmp_dir'], DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.uniqid().'.html';
-        file_put_contents($filename, $this->mink->getSession()->getPage()->getContent());
-        system(sprintf($this->parameters['show_cmd'], escapeshellarg($filename)));
+        $page = $this->mink->getSession()->getPage();
+        if ($page){
+            $filename = rtrim($this->parameters['show_tmp_dir'], DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.uniqid().'.html';
+            file_put_contents($filename, $page->getContent());
+            system(sprintf($this->parameters['show_cmd'], escapeshellarg($filename)));
+        }
     }
 }
