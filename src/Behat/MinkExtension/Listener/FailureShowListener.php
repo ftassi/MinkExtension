@@ -73,6 +73,8 @@ class FailureShowListener implements EventSubscriberInterface
      * `show_tmp_dir` folder where to store temp files (default is system temp)
      *
      * @param StepEvent $event
+     * @throws \RuntimeException
+     * @return void
      */
     public function showFailedStepResponse($event)
     {
